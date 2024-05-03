@@ -1,0 +1,31 @@
+various connection and measures created in project are
+
+Filter_sale = VAR _select = SELECTEDVALUE(Sales_Option[Type])
+RETURN IF(_select="1" , [Sale_amount],[Sale_units])
+
+review = VAR val= SUM('amazon-fashion - YT'[no_of_reviews])
+RETURN IF(val=BLANK(),"0",val)
+
+Sale_amount = SUM(Amazon[Amount])
+
+Sale_units = SUM(Amazon[Qty])
+
+SalesOn = var selected = SELECTEDVALUE(Sales_Option[Type])
+var _url = "https://drive.google.com/uc?export=view&id=1mcmb1peVHoaU5XL2bYXinZtW9sv2bNG4"
+return IF(selected="1",_url)
+
+Seller_count = VAR val =CALCULATE(COUNT('amazon-fashion - YT'[Saller ID]),CONTAINSSTRING(Amazon[Status],"Delivered"))
+RETURN IF(val=BLANK(),"0",val)
+
+Total_amount = Amazon[Amount]*Amazon[Qty]
+
+new table
+Sales_Option = 
+DATATABLE(
+    "Type", STRING,
+    "Name", STRING,
+    {
+        {"1", "Sales"},
+        {"2", "Units"}
+    }
+) 
